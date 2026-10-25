@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulasi Praktikum Asam Nukleat</title>
+<style>
+:root{--ink:#202b4e;--muted:#65708d;--purple:#6b45ef;--lav:#e8e8ff;--red:#d9443f;--teal:#087f86;--orange:#b84d0b;--line:#d9def2;--white:#fff;--bg:#f2f3ff}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#e5e5ff,#f5f7ff 55%,#e9f4ff);font-family:ui-rounded,"Trebuchet MS",system-ui,-apple-system,sans-serif;color:var(--ink)}
+header{padding:22px 18px 12px;max-width:900px;margin:auto}.brand{display:flex;align-items:center;gap:12px}.logo{font-size:34px;background:#d5fff5;border-radius:16px;padding:8px}.brand h1{font-size:clamp(22px,5vw,34px);margin:0;font-weight:900;letter-spacing:-.5px}.sub{color:var(--muted);margin:8px 0 0;font-size:14px}
+.wrap{max-width:900px;margin:0 auto;padding:10px 16px 40px}.stars{float:right;background:#fff;border:1px solid var(--line);border-radius:30px;padding:9px 14px;font-weight:800}
+.section-label{font-size:18px;font-weight:900;margin:18px 0 12px}.menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.menu-card{border:3px solid var(--line);border-bottom-width:8px;border-radius:26px;background:#fff;padding:16px;text-align:left;color:var(--ink);cursor:pointer;min-height:115px;transition:transform .12s,box-shadow .12s;font:inherit}.menu-card:hover{transform:translateY(-2px);box-shadow:0 8px 18px #202b4e12}.menu-card strong{display:block;font-size:17px;margin:5px 0}.menu-card small{color:var(--muted);font-size:13px}.menu-card .emoji{font-size:25px}.menu-card.red{border-color:#d94b42}.menu-card.teal{border-color:#13888c}.menu-card.purple{border-color:#7048f5}.menu-card.orange{border-color:#b95410}.menu-card.blue{border-color:#4388cf}.panel{background:#fff;border:2px solid var(--line);border-radius:28px;padding:20px;margin-top:18px;box-shadow:0 8px 24px #29345c0b}.hidden{display:none!important}.panel h2{font-size:25px;margin:0 0 8px;line-height:1.2}.muted{color:var(--muted);line-height:1.55}.progress{height:10px;background:#e1e7f8;border-radius:20px;overflow:hidden;margin:12px 0 18px}.progress span{display:block;height:100%;width:0;background:var(--purple);transition:width .25s}.stage{background:#f7f7ff;border:1px solid var(--line);border-radius:20px;padding:18px;margin:14px 0}.visual{font-size:64px;text-align:center;padding:12px 0;filter:drop-shadow(0 4px 0 #202b4e0b)}.step-count{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--purple);font-weight:900}.stage h3{margin:7px 0;font-size:20px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.btn{border:0;border-radius:14px;padding:12px 17px;font:inherit;font-weight:800;cursor:pointer;background:var(--purple);color:#fff}.btn.secondary{background:#e9eaff;color:#38366d}.btn:disabled{opacity:.45;cursor:not-allowed}.note{background:#fff7df;border-left:4px solid #e6a625;padding:12px 14px;border-radius:10px;color:#5d4a20;font-size:13px;line-height:1.5}.result{border-radius:16px;padding:14px;background:#effaf5;margin-top:14px;line-height:1.55}.result.caution{background:#fff7df}.testtube{height:100px;width:48px;border:4px solid #8794b9;border-top:0;border-radius:0 0 20px 20px;margin:10px auto 4px;position:relative;overflow:hidden;background:#ffffffaa}.liquid{position:absolute;bottom:0;left:0;right:0;height:48%;background:#f5cf56;transition:background .4s,height .4s}.liquid.purple{background:#8d58d7}.liquid.yellow{background:#f3ce48}.liquid.blue{background:#6dbbd5}.liquid.orange{background:#e98b36}.liquid.white{background:#f7f7f7}.quiz-option{display:block;width:100%;text-align:left;background:#f8f8ff;border:2px solid var(--line);border-radius:13px;padding:12px;margin:8px 0;color:var(--ink);font:inherit;cursor:pointer}.quiz-option.selected{border-color:var(--purple);background:#efedff}.quiz-option:disabled{cursor:default}.feedback{padding:12px;border-radius:12px;margin-top:12px;line-height:1.5}.good{background:#e8f8ee}.bad{background:#fff0ed}.footer{text-align:center;color:var(--muted);font-size:12px;padding:24px 8px}
+
+.lab-scene{margin:16px 0 4px;background:linear-gradient(180deg,#eef3ff,#e5f6f5);border:1px solid #d3def4;border-radius:20px;padding:14px;overflow:hidden}
+.lab-caption{font-weight:900;text-align:center;font-size:14px;color:#414c78}
+.lab-items{height:145px;display:flex;align-items:center;justify-content:space-evenly;position:relative;gap:5px}
+.lab-object{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;color:#526080;min-width:65px}
+.object-emoji{font-size:39px;transition:transform .45s}.arrow{color:#8d95b8;font-size:21px}
+.tube-wrap{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10px;color:#526080}
+.animated-tube{width:35px;height:78px;border:3px solid #8191b7;border-top:0;border-radius:0 0 14px 14px;position:relative;overflow:hidden;background:#ffffffb5;transform:translateY(0)}
+.tube-cap{height:8px;width:39px;background:#8794b9;border-radius:4px 4px 1px 1px}
+.tube-liquid{position:absolute;bottom:0;left:0;right:0;height:0;background:#b9e5f4;transition:height .7s,background .7s;border-radius:0 0 10px 10px}
+.tube-mark{position:absolute;top:26px;right:0;width:8px;height:2px;background:#a4b0ce;box-shadow:0 10px #a4b0ce,0 20px #a4b0ce}
+.pipette{font-size:30px;opacity:.2;transform:translateY(-30px) rotate(-30deg);transition:all .5s}
+.lab-status{min-height:39px;text-align:center;background:#fff;border-radius:12px;padding:10px;font-size:12px;color:#536080;line-height:1.4}
+.lab-scene.animating .tube-wrap{animation:tubeEnter .8s ease}.lab-scene.animating .pipette{opacity:1;transform:translateY(8px) rotate(0);animation:drop 1s ease}
+.lab-scene.animating .object-emoji{animation:bob .65s ease}.lab-scene.animating .animated-tube{animation:shake .45s ease}
+@keyframes tubeEnter{0%{transform:translateY(-38px);opacity:.3}100%{transform:translateY(0);opacity:1}}
+@keyframes drop{0%{transform:translateY(-35px) rotate(-30deg);opacity:.1}55%{transform:translateY(10px) rotate(0);opacity:1}100%{transform:translateY(8px);opacity:.8}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px) scale(1.08)}}
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+@media(max-width:520px){.menu{grid-template-columns:1fr}.menu-card{min-height:95px;display:grid;grid-template-columns:42px 1fr;column-gap:10px;align-items:center}.menu-card .emoji{grid-row:span 2}.menu-card strong{margin:0}.menu-card small{grid-column:2}.panel{padding:16px}.stars{font-size:13px}}
+</style>
+</head>
+<body>
+<header><div class="stars">⭐ <span id="stars">0</span></div><div class="brand"><div class="logo">🧬</div><div><h1>Asam Nukleat</h1><div class="sub">Simulasi praktikum interaktif · Biokimia Veteriner</div></div></div></header>
+<main class="wrap">
+<div id="home">
+  <div class="section-label">👇 Pilih percobaan</div>
+  <div class="menu">
+    <button class="menu-card red" onclick="openExperiment('extract')"><span class="emoji">🧪</span><strong>Ekstraksi asam nukleat</strong><small>Hati ayam · langkah demi langkah</small></button>
+    <button class="menu-card teal" onclick="openExperiment('ribose')"><span class="emoji">🧫</span><strong>Uji ribosa</strong><small>Reagen Benedict dan pemanasan</small></button>
+    <button class="menu-card purple" onclick="openExperiment('phosphate')"><span class="emoji">🧬</span><strong>Uji fosfat</strong><small>HNO₃ dan amonium molibdat</small></button>
+    <button class="menu-card orange" onclick="openExperiment('nitrogen')"><span class="emoji">🔬</span><strong>Uji basa nitrogen</strong><small>CuSO₄ dan NaHSO₃</small></button>
+    <button class="menu-card blue" onclick="startQuiz()" style="grid-column:1/-1"><span class="emoji">📝</span><strong>Kuis materi</strong><small>10 soal pilihan ganda · skor otomatis</small></button>
+  </div>
+  <section class="panel"><div class="step-count">SELAMAT DATANG</div><h2>Belajar sambil mencoba!</h2><p class="muted">Pilih salah satu menu untuk melihat prosedur, fungsi bahan, dan interpretasi pengamatan. Tekan tombol <b>Lanjut</b> untuk menjalankan simulasi.</p><div class="note">⚠️ Ini adalah simulasi pembelajaran, bukan hasil percobaan nyata. Warna dan interpretasi harus dicocokkan dengan modul praktikum serta referensi yang digunakan di laboratorium.</div></section>
+</div>
+<div id="experiment" class="panel hidden">
+  <button class="btn secondary" onclick="goHome()">← Beranda</button>
+  <div style="margin-top:18px" class="step-count" id="expLabel">SIMULASI</div>
+  <h2 id="expTitle"></h2><p class="muted" id="expIntro"></p>
+  <div class="progress"><span id="progress"></span></div>
+  <div class="stage"><div class="step-count" id="stepCount"></div><div class="visual" id="visual">🧪</div><h3 id="stepTitle"></h3><p class="muted" id="stepText"></p>
+<div class="lab-scene" id="labScene"><div class="lab-caption" id="labCaption">Meja praktikum siap</div><div class="lab-items">
+<div class="lab-object"><div class="object-emoji" id="sampleEmoji">🧫</div><span id="sampleLabel">Sampel</span></div><div class="arrow">➜</div>
+<div class="tube-wrap"><div class="tube-cap"></div><div class="animated-tube"><div class="tube-liquid" id="tubeLiquid"></div><div class="tube-mark"></div></div><span>Tabung reaksi</span></div><div class="pipette" id="pipette">💧</div></div>
+<div class="lab-status" id="labStatus">Tekan “Lakukan langkah” untuk memulai animasi.</div></div>
+<div id="tubeArea" class="hidden"><div class="testtube"><div class="liquid" id="liquid"></div></div><div class="muted" style="text-align:center;font-size:12px">Ilustrasi hasil pengamatan</div></div></div>
+<div class="actions"><button class="btn" id="actionBtn" onclick="performAction()">▶ Lakukan langkah</button></div>
+  <div class="note" id="stepNote"></div>
+  <div id="interpretation" class="result hidden"></div>
+  <div class="actions"><button id="prevBtn" class="btn secondary" onclick="moveStep(-1)">← Sebelumnya</button><button id="nextBtn" class="btn" onclick="moveStep(1)">Lanjut →</button></div>
+</div>
+<div id="quiz" class="panel hidden">
+  <button class="btn secondary" onclick="goHome()">← Beranda</button><div class="step-count" style="margin-top:18px">KUIS MATERI</div><h2 id="quizTitle">Seberapa paham kamu?</h2><div class="progress"><span id="quizProgress"></span></div><div id="quizContent"></div><div class="actions"><button class="btn" id="quizNext" onclick="answerNext()" disabled>Periksa jawaban</button></div>
+</div>
+<div class="footer">Simulasi edukasi · Ikuti SOP laboratorium dan arahan dosen/asisten praktikum.</div>
+</main>
+<script>
+const experiments={
+extract:{label:"EKSTRAKSI",title:"Ekstraksi asam nukleat",intro:"Ikuti tahapan ekstraksi dari hati ayam. Tekan Lanjut setelah membaca setiap langkah.",steps:[
+["🫀","1. Haluskan hati ayam","Haluskan sampel hati ayam menggunakan mortar agar jaringan terpecah menjadi bagian lebih kecil.","Mortar membantu menghancurkan jaringan secara mekanis.","Gunakan alat pelindung diri dan ikuti instruksi laboratorium."],
+["💧","2. Siapkan larutan ekstraksi","Campurkan aquades, garam dapur, dan sabun, lalu aduk perlahan hingga merata.","Sabun membantu merusak membran lipid; garam membantu kondisi ionik dan dapat membantu penggumpalan asam nukleat.","Komposisi dan volume larutan mengikuti modul praktikum."],
+["🥣","3. Campurkan sampel","Masukkan hati ayam yang telah dihaluskan ke dalam larutan, kemudian campur perlahan.","Pencampuran membantu kontak antara larutan ekstraksi dan jaringan.","Hindari mengaduk terlalu kuat agar sampel tidak terlalu berbusa."],
+["⏱️","4. Inkubasi 15 menit","Simulasikan inkubasi selama 15 menit sesuai prosedur pada modul.","Waktu inkubasi memberi kesempatan larutan bekerja pada jaringan.","Tampilan waktu di sini hanya simulasi; tidak menjalankan timer laboratorium."],
+["🫗","5. Saring larutan","Saring campuran ke dalam gelas kimia untuk memisahkan sisa jaringan.","Penyaringan memisahkan bagian jaringan yang kasar dari ekstrak cair.","Hasil filtrasi dapat masih mengandung campuran molekul sel."],
+["🧵","6. Tambahkan alkohol dingin","Tambahkan alkohol dingin 70% perlahan sesuai prosedur modul. Dalam prosedur yang diberikan, digunakan 100 mL.","Asam nukleat kurang larut dalam alkohol sehingga dapat tampak sebagai benang atau endapan putih di batas lapisan.","Jangan melakukan prosedur ini tanpa pengawasan. Alkohol mudah terbakar; jauhkan dari api dan sumber panas."]
+]},
+ribose:{label:"UJI KIMIA",title:"Uji ribosa (Benedict)",intro:"Simulasi pengujian gula pereduksi menggunakan reagen Benedict dan pemanasan.",steps:[
+["🧪","1. Masukkan ekstrak","Masukkan 5 mL ekstrak asam nukleat ke dalam tabung reaksi.","Ekstrak menjadi sampel yang akan diuji.","Pastikan volume mengikuti modul."],
+["🧴","2. Tambahkan Benedict","Tambahkan 4 mL reagen Benedict ke tabung reaksi.","Benedict digunakan untuk mendeteksi gula pereduksi; ribosa termasuk gula pereduksi.","Uji Benedict tidak spesifik hanya untuk ribosa."],
+["🔄","3. Homogenkan","Campurkan larutan secara perlahan hingga merata.","Homogenisasi membantu sampel bercampur dengan reagen.","Pada praktikum nyata, ikuti teknik pencampuran yang diajarkan."],
+["🔥","4. Panaskan dan amati","Simulasikan pemanasan sesuai SOP praktikum, lalu amati perubahan warna atau endapan.","Hasil positif Benedict umumnya berubah dari biru menuju hijau, kuning, jingga, hingga merah bata, bergantung pada jumlah gula pereduksi.","Hasil simulasi bukan hasil eksperimen. Ekstrak campuran dapat memengaruhi pengamatan; konfirmasi sesuai modul."]
+],result:"Benedict mendeteksi gula pereduksi, bukan ribosa secara eksklusif. Perubahan warna menuju hijau/kuning/jingga hingga merah bata dapat menunjukkan adanya gula pereduksi; interpretasi akhir perlu mempertimbangkan kontrol dan kondisi uji."},
+phosphate:{label:"UJI KIMIA",title:"Uji fosfat",intro:"Simulasi tahapan penambahan HNO₃ dan amonium molibdat 5%.",steps:[
+["🧪","1. Masukkan ekstrak","Masukkan 2 mL ekstrak asam nukleat ke tabung reaksi.","Ekstrak menjadi sampel untuk pemeriksaan fosfat.","Gunakan alat dan volume sesuai modul."],
+["💧","2. Tambahkan HNO₃","Tambahkan 1 mL asam nitrat (HNO₃) sesuai prosedur.","Asam nitrat menciptakan kondisi asam untuk reaksi uji.","HNO₃ bersifat korosif; penanganan hanya di laboratorium dengan pengawasan."],
+["🔄","3. Homogenkan dan panaskan","Homogenkan, lalu panaskan sesuai SOP laboratorium.","Pemanasan dapat membantu berlangsungnya reaksi yang ditetapkan dalam prosedur.","Jangan memanaskan bahan kimia tanpa instruksi dan pengawasan."],
+["🧴","4. Tambahkan amonium molibdat","Tambahkan 2 mL amonium molibdat 5%, lalu amati hasilnya.","Dalam uji fosfat yang sesuai, pembentukan endapan kuning dapat menunjukkan fosfat.","Hasil aktual bergantung pada komposisi sampel dan kondisi reaksi; cocokkan dengan modul."]
+],result:"Pada metode fosfat yang sesuai, terbentuknya endapan kuning dapat mengindikasikan fosfat. Karena hasil dapat dipengaruhi kondisi uji, gunakan kontrol dan pastikan prosedur ini cocok dengan metode yang diajarkan."},
+nitrogen:{label:"UJI KIMIA",title:"Uji basa nitrogen",intro:"Ikuti prosedur sesuai modul dan lihat catatan interpretasi yang perlu dikonfirmasi.",steps:[
+["🧪","1. Masukkan ekstrak","Masukkan 2 mL ekstrak asam nukleat ke dalam tabung reaksi.","Sampel menjadi bahan yang diuji.","Gunakan tabung bersih dan label yang sesuai."],
+["💧","2. Tambahkan asam asetat","Tambahkan beberapa tetes CH₃COOH sesuai modul.","Asam asetat mengubah kondisi keasaman campuran.","Gunakan konsentrasi dan jumlah sesuai petunjuk praktikum."],
+["🔥","3. Homogenkan dan panaskan","Homogenkan lalu panaskan mengikuti SOP laboratorium.","Tahap ini merupakan bagian dari prosedur yang diberikan.","Jangan memanaskan larutan tanpa pengawasan."],
+["🧴","4. Tambahkan pereaksi","Tambahkan CuSO₄ dan NaHSO₃ masing-masing 1 mL, lalu amati perubahan.","Catat warna, endapan, atau perubahan lain yang benar-benar terlihat.","Warna positif dan prinsip spesifik metode ini perlu diverifikasi dari modul atau referensi dosen."]
+],result:"Interpretasi uji basa nitrogen tidak ditetapkan otomatis dalam simulasi ini karena perubahan khas dari kombinasi pereaksi dan prosedur tersebut perlu diverifikasi. Gunakan hasil pengamatan nyata dan rujukan modul; jangan menyimpulkan positif hanya dari warna yang diperkirakan.",caution:true}
+};
+let currentExp=null,step=0,stars=0;
+
+let actionDone=false;
+const actionScenes={
+extract:[["🫀","Mortar dan sampel hati ayam disiapkan.","#d9a6a1",8],["🧂","Aquades, garam, dan sabun ditambahkan secara visual.","#b9e5f4",22],["🥣","Sampel dicampurkan ke larutan ekstraksi.","#d5b7a2",42],["⏱️","Inkubasi ditunjukkan secara visual, bukan timer nyata.","#c5d9a8",48],["🫗","Filtrat dipindahkan ke wadah bersih.","#d9c9a4",42],["🧵","Ilustrasi benang putih pada batas lapisan alkohol.","#f7f7f7",32]],
+ribose:[["🧪","Tabung reaksi disiapkan dan diberi label.","#ffffff",4],["🧴","Reagen Benedict ditambahkan secara visual.","#6dbbd5",30],["🔄","Tabung dihomogenkan dengan animasi.","#6dbbd5",38],["🔥","Pemanasan simulasi selesai; warna hanya ilustrasi.","#e9a044",55]],
+phosphate:[["🧪","Tabung reaksi berisi ekstrak disiapkan.","#ffffff",4],["💧","Penambahan HNO₃ ditunjukkan secara visual.","#d8e7ef",18],["🔥","Homogenisasi dan pemanasan disimulasikan.","#d8e7ef",25],["🧴","Amonium molibdat ditambahkan; warna hanya ilustrasi.","#f1d25c",55]],
+nitrogen:[["🧪","Tabung reaksi berisi ekstrak disiapkan.","#ffffff",4],["💧","Asam asetat ditambahkan secara visual.","#d8e7ef",18],["🔥","Homogenisasi dan pemanasan disimulasikan.","#d8e7ef",25],["🧴","Pereaksi ditambahkan; hasil warna perlu diverifikasi.","#f3f3f3",30]]
+};
+function performAction(){
+ const key=Object.keys(experiments).find(k=>experiments[k]===currentExp);
+ const cfg=actionScenes[key][step],scene=document.getElementById('labScene');
+ scene.classList.remove('animating');void scene.offsetWidth;scene.classList.add('animating');
+ document.getElementById('sampleEmoji').textContent=cfg[0];
+ document.getElementById('sampleLabel').textContent=step===0?'Persiapan':'Bahan / tahap';
+ document.getElementById('labCaption').textContent=currentExp.steps[step][1];
+ document.getElementById('tubeLiquid').style.height=cfg[3]+'%';
+ document.getElementById('tubeLiquid').style.background=cfg[2];
+ document.getElementById('labStatus').textContent=cfg[1]+' Ini ilustrasi proses, bukan pengukuran eksperimen nyata.';
+ actionDone=true;document.getElementById('actionBtn').textContent='✓ Langkah dilakukan';
+ document.getElementById('nextBtn').disabled=false;
+}
+
+function openExperiment(key){currentExp=experiments[key];step=0;document.getElementById('home').classList.add('hidden');document.getElementById('quiz').classList.add('hidden');document.getElementById('experiment').classList.remove('hidden');renderStep()}
+function goHome(){document.getElementById('home').classList.remove('hidden');document.getElementById('experiment').classList.add('hidden');document.getElementById('quiz').classList.add('hidden')}
+function renderStep(){actionDone=false;const s=currentExp.steps[step];document.getElementById('expLabel').textContent=currentExp.label;document.getElementById('expTitle').textContent=currentExp.title;document.getElementById('expIntro').textContent=currentExp.intro;document.getElementById('stepCount').textContent=`LANGKAH ${step+1} DARI ${currentExp.steps.length}`;document.getElementById('visual').textContent=s[0];document.getElementById('stepTitle').textContent=s[1];document.getElementById('stepText').textContent=s[2];document.getElementById('stepNote').textContent=s[3]+' '+s[4];document.getElementById('progress').style.width=((step+1)/currentExp.steps.length*100)+'%';document.getElementById('prevBtn').disabled=step===0;document.getElementById('nextBtn').textContent=step===currentExp.steps.length-1?'Selesai ✓':'Lanjut →';document.getElementById('nextBtn').disabled=true;document.getElementById('actionBtn').textContent='▶ Lakukan langkah';document.getElementById('labStatus').textContent='Tekan “Lakukan langkah” untuk memulai animasi.';document.getElementById('labCaption').textContent='Meja praktikum siap';document.getElementById('sampleEmoji').textContent='🧫';document.getElementById('tubeLiquid').style.height='0%';document.getElementById('labScene').classList.remove('animating');const result=document.getElementById('interpretation');if(step===currentExp.steps.length-1){result.classList.remove('hidden');result.className='result'+(currentExp.caution?' caution':'');result.textContent=currentExp.result||'Ekstraksi selesai dalam simulasi. Benang/endapan putih dapat muncul setelah penambahan alkohol dingin, tetapi pengamatan nyata tetap perlu dicatat.';document.getElementById('tubeArea').classList.remove('hidden');document.getElementById('liquid').className='liquid '+(currentExp.caution?'white':currentExp.label==='UJI KIMIA'?(currentExp.title.includes('fosfat')?'yellow':'orange'):'white');}else{result.classList.add('hidden');document.getElementById('tubeArea').classList.add('hidden')}}
+function moveStep(d){if(d===1&&!actionDone)return;if(d===1&&step===currentExp.steps.length-1){stars=Math.min(stars+1,5);document.getElementById('stars').textContent=stars;goHome();return}step=Math.max(0,Math.min(currentExp.steps.length-1,step+d));renderStep()}
+const questions=[
+{q:"Apa fungsi sabun pada proses ekstraksi asam nukleat?",a:["Memberi warna pada DNA","Membantu merusak membran lipid sel","Mengubah DNA menjadi protein","Menetralkan semua asam"],c:1,e:"Sabun membantu melarutkan lipid membran sehingga isi sel dapat keluar."},
+{q:"Mengapa hati ayam dihaluskan?",a:["Agar jaringan lebih mudah terpecah","Agar DNA berubah menjadi gula","Agar larutan menjadi steril","Agar fosfat menghilang"],c:0,e:"Penghalusan memecah jaringan secara mekanis dan memperbesar kontak dengan larutan."},
+{q:"Mengapa alkohol dingin ditambahkan pada ekstrak?",a:["Untuk membuat larutan berwarna biru","Untuk meningkatkan kelarutan asam nukleat","Untuk membantu asam nukleat mengendap/terpisah dari larutan","Untuk mencerna seluruh DNA"],c:2,e:"Asam nukleat kurang larut dalam alkohol sehingga dapat terlihat sebagai benang/endapan."},
+{q:"Reagen Benedict terutama digunakan untuk mendeteksi…",a:["Gula pereduksi","Lemak netral saja","DNA secara spesifik","Ion klorida"],c:0,e:"Benedict mendeteksi gula pereduksi dan bukan uji spesifik hanya untuk ribosa."},
+{q:"Ribosa termasuk kelompok…",a:["Asam lemak","Monosakarida","Asam amino","Steroid"],c:1,e:"Ribosa adalah gula sederhana (pentosa/monosakarida)."},
+{q:"Apa yang perlu dilakukan setelah mencampurkan sampel dengan Benedict sesuai prosedur?",a:["Langsung dibuang","Dibekukan semalaman","Dipanaskan sesuai SOP lalu diamati","Ditambah alkohol tanpa petunjuk"],c:2,e:"Prosedur yang diberikan meminta pemanasan dan pengamatan perubahan."},
+{q:"Pada uji fosfat dengan metode yang sesuai, hasil positif dapat ditandai dengan…",a:["Endapan kuning","Selalu gas hijau","Bau harum","Tidak mungkin ada perubahan"],c:0,e:"Pada metode fosfat yang sesuai, endapan kuning dapat mengindikasikan fosfat."},
+{q:"Apa fungsi pencatatan hasil pengamatan?",a:["Menggantikan prosedur","Membuat hasil terlihat bagus","Mendokumentasikan perubahan nyata untuk interpretasi","Menjamin semua sampel positif"],c:2,e:"Catat warna, endapan, dan kondisi nyata sebelum menarik kesimpulan."},
+{q:"Apakah perubahan warna Benedict membuktikan keberadaan ribosa secara eksklusif?",a:["Ya, selalu","Tidak, Benedict mendeteksi gula pereduksi","Ya, tanpa kontrol","Tidak, karena Benedict hanya untuk protein"],c:1,e:"Benedict tidak spesifik hanya untuk ribosa; gula pereduksi lain juga dapat bereaksi."},
+{q:"Bagaimana sebaiknya menafsirkan hasil uji basa nitrogen jika reaksi khas belum diverifikasi?",a:["Mengarang warna positif","Menyatakan positif tanpa pengamatan","Mencocokkan dengan modul/referensi dan mencatat hasil nyata","Mengabaikan kontrol"],c:2,e:"Jangan mengarang hasil. Pastikan prinsip metode dan hasil yang diharapkan dari modul atau referensi."}
+];
+let qi=0,score=0,chosen=null,locked=false;
+function startQuiz(){qi=0;score=0;chosen=null;locked=false;document.getElementById('home').classList.add('hidden');document.getElementById('experiment').classList.add('hidden');document.getElementById('quiz').classList.remove('hidden');renderQuiz()}
+function renderQuiz(){document.getElementById('quizTitle').textContent=qi<questions.length?`Soal ${qi+1} dari ${questions.length}`:`Skor kamu: ${score}/${questions.length*10}`;document.getElementById('quizProgress').style.width=(Math.min(qi+1,questions.length)/questions.length*100)+'%';const c=document.getElementById('quizContent');const btn=document.getElementById('quizNext');if(qi>=questions.length){c.innerHTML=`<div class="stage"><div class="visual">${score>=70?'🏆':'📚'}</div><h3>${score>=70?'Hebat!':'Tetap semangat!'}</h3><p class="muted">Nilai akhir: <b>${score}</b>/100. ${score>=70?'Kamu sudah memahami banyak konsep dasar.':'Pelajari kembali prosedur dan prinsip tiap pengujian, lalu coba lagi.'}</p></div>`;btn.textContent='Ulangi kuis';btn.disabled=false;btn.onclick=()=>{qi=0;score=0;chosen=null;locked=false;btn.onclick=answerNext;btn.textContent='Periksa jawaban';btn.disabled=true;renderQuiz()};return}const q=questions[qi];c.innerHTML=`<h3>${q.q}</h3>`+q.a.map((a,i)=>`<button class="quiz-option ${chosen===i?'selected':''}" ${locked?'disabled':''} onclick="choose(${i})">${String.fromCharCode(65+i)}. ${a}</button>`).join('')+(locked?`<div class="feedback ${chosen===q.c?'good':'bad'}"><b>${chosen===q.c?'Benar!':'Belum tepat.'}</b> ${q.e}</div>`:'');btn.textContent=locked?(qi===questions.length-1?'Lihat hasil':'Soal berikutnya'):'Periksa jawaban';btn.disabled=!locked&&chosen===null}
+function choose(i){if(locked)return;chosen=i;renderQuiz()}
+function answerNext(){if(qi>=questions.length){qi=0;score=0;chosen=null;locked=false;renderQuiz();return}if(!locked){if(chosen===null)return;locked=true;if(chosen===questions[qi].c)score+=10;renderQuiz()}else{qi++;chosen=null;locked=false;renderQuiz()}}
+</script>
+</body>
+</html>
